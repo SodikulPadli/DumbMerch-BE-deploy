@@ -1,11 +1,11 @@
 // import models
-const { product, user } = require("../../models");
+const { product, user } = require('../../models');
 
 // import joi
-const Joi = require("joi");
+const Joi = require('joi');
 
 // cloudinary
-const cloudinary = require("../utils/Cloudinary");
+const cloudinary = require('../utils/Cloudinary');
 
 // add product
 exports.addProduct = async (req, res) => {
@@ -14,7 +14,7 @@ exports.addProduct = async (req, res) => {
 
   // cloudinary
   const result = await cloudinary.uploader.upload(req.file.path, {
-    folder: "DumbMerch/Product",
+    folder: 'DumbMerch',
     use_filename: true,
     unique_filename: false,
   });
@@ -34,7 +34,7 @@ exports.addProduct = async (req, res) => {
 
   if (error) {
     return res.send({
-      status: "Failed",
+      status: 'Failed',
       message: error.details[0].message,
     });
   }
@@ -53,13 +53,13 @@ exports.addProduct = async (req, res) => {
       },
       include: {
         model: user,
-        as: "user",
+        as: 'user',
         attributes: {
-          exclude: ["createdAt", "updatedAt", "password"],
+          exclude: ['createdAt', 'updatedAt', 'password'],
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idUser"],
+        exclude: ['createdAt', 'updatedAt', 'idUser'],
       },
     });
 
@@ -70,14 +70,14 @@ exports.addProduct = async (req, res) => {
       image: process.env.PATH_FILE_PRODUCT + productData.image,
     };
     res.status(200).send({
-      status: "Success",
-      message: "Product created successfully",
+      status: 'Success',
+      message: 'Product created successfully',
       data: productData,
     });
   } catch (error) {
     res.status(400).send({
-      status: "Error",
-      message: "Server error",
+      status: 'Error',
+      message: 'Server error',
     });
   }
 };
@@ -88,13 +88,13 @@ exports.getProducts = async (req, res) => {
     let productData = await product.findAll({
       include: {
         model: user,
-        as: "user",
+        as: 'user',
         attributes: {
-          exclude: ["createdAt", "updatedAt", "password"],
+          exclude: ['createdAt', 'updatedAt', 'password'],
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idUser"],
+        exclude: ['createdAt', 'updatedAt', 'idUser'],
       },
     });
 
@@ -108,14 +108,14 @@ exports.getProducts = async (req, res) => {
     });
 
     res.send({
-      status: "Success",
-      message: "Product data found",
+      status: 'Success',
+      message: 'Product data found',
       data: productData,
     });
   } catch (error) {
     res.status(500).send({
-      status: "Error",
-      message: "Server error",
+      status: 'Error',
+      message: 'Server error',
     });
   }
 };
@@ -131,21 +131,21 @@ exports.getProduct = async (req, res) => {
       where: { id },
       include: {
         model: user,
-        as: "user",
+        as: 'user',
         attributes: {
-          exclude: ["createdAt", "updatedAt", "password"],
+          exclude: ['createdAt', 'updatedAt', 'password'],
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idUser"],
+        exclude: ['createdAt', 'updatedAt', 'idUser'],
       },
     });
 
     // product not found
     if (productData === null) {
       return res.send({
-        status: "Success",
-        message: "Product data not found",
+        status: 'Success',
+        message: 'Product data not found',
       });
     }
 
@@ -157,14 +157,14 @@ exports.getProduct = async (req, res) => {
     };
 
     res.send({
-      status: "Success",
-      message: "Product data found",
+      status: 'Success',
+      message: 'Product data found',
       data: productData,
     });
   } catch (error) {
     res.status(500).send({
-      status: "Error",
-      message: "Server error",
+      status: 'Error',
+      message: 'Server error',
     });
   }
 };
@@ -199,7 +199,7 @@ exports.updateProduct = async (req, res) => {
 
       // upload file to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "DumbMerch/Product",
+        folder: 'DumbMerch/Product',
         use_filename: true,
         unique_filename: false,
       });
@@ -226,13 +226,13 @@ exports.updateProduct = async (req, res) => {
       where: { id },
       include: {
         model: user,
-        as: "user",
+        as: 'user',
         attributes: {
-          exclude: ["createdAt", "updatedAt", "password"],
+          exclude: ['createdAt', 'updatedAt', 'password'],
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idUser"],
+        exclude: ['createdAt', 'updatedAt', 'idUser'],
       },
     });
 
@@ -244,14 +244,14 @@ exports.updateProduct = async (req, res) => {
     };
 
     res.status(200).send({
-      status: "Success",
-      message: "Product data found",
+      status: 'Success',
+      message: 'Product data found',
       data: productData,
     });
   } catch (error) {
     res.status(500).send({
-      status: "Error",
-      message: "Server error",
+      status: 'Error',
+      message: 'Server error',
     });
     console.log(error);
   }
@@ -280,13 +280,13 @@ exports.deleteProduct = async (req, res) => {
     });
 
     res.status(200).send({
-      status: "Success",
-      message: "Product data deleted successfully",
+      status: 'Success',
+      message: 'Product data deleted successfully',
     });
   } catch (error) {
     res.status(500).send({
-      status: "Error",
-      message: "Server error",
+      status: 'Error',
+      message: 'Server error',
     });
   }
 };
